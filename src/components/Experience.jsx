@@ -1,59 +1,59 @@
 import React, { useRef } from 'react'
-import { extend, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { CustomObject } from './CustomObject';
-
-extend({ OrbitControls })
+import { MeshReflectorMaterial, Float, Text, Html, PivotControls, OrbitControls, TransformControls } from '@react-three/drei';
 
 export const Experience = () => {
 
-    const { camera, gl } = useThree();
     const cubeRef = useRef();
-    const groupRef = useRef();
-
-
-
-    useFrame(({ camera, clock }, delta) => {
-        // camera.position.x += delta;
-
-        // console.log(clock.elapsedTime);
-
-        const angle = clock.elapsedTime;
-        camera.position.x = Math.sin(angle) * 8
-        camera.position.z = Math.cos(angle) * 8
-        camera.lookAt(0, 0, 0);
-
-        cubeRef.current.rotation.y += delta;
-        // groupRef.current.rotation.y += delta;
-    })
+    const sphereRef = useRef();
 
 
 
     return (
         <>
-            {/* <orbitControls args={ [camera, gl.domElement ] }/> */}
 
+            <OrbitControls makeDefault />
+            
             <directionalLight position={ [ 1, 2, 3  ] } intensity={ 1.5 }/>
             <ambientLight intensity={ 0.5 }/>
 
-            <group ref={ groupRef }>
-                <mesh 
-                    rotation-y={ Math.PI * 0.25 }
-                    position-x={ 3 }
-                    scale={ 1.5 }
-                    ref={ cubeRef }
-                >
-                    <boxGeometry scale={ 1.5 } />
-                    <meshStandardMaterial color="mediumpurple" wireframe={ false } />
-                </mesh>
-
+            <PivotControls 
+                anchor={ [ 0, 0, 0 ] } 
+                depthTest={ false }
+                lineWidth={ 4 }
+                axisColors={ ['#9381ff', '#ff4d6d', '#7ae582'] }
+                scale={ 100 }
+                fixed
+            >
                 <mesh
-                    position-x={ -3 }
+                    position-x={ - 3 }
+                    ref={ sphereRef }
                 >
                     <sphereGeometry />
                     <meshStandardMaterial color="orange" />
+                    
+                    <Html
+                        position={ [1, 1, 0] }
+                        wrapperClass="label"
+                        center
+                        distanceFactor={ 6 }
+                        occlude={ [ sphereRef, cubeRef ] }
+                    >
+                        ⚡ Html Inside
+                    </Html>
                 </mesh>
-            </group>
+            </PivotControls>
+
+            <mesh 
+                ref={ cubeRef }
+                scale={ 1.5 }
+                position-x={ 3.5 }
+            >
+                <boxGeometry scale={ 1.5 } />
+                <meshStandardMaterial color="mediumpurple" wireframe={ false } />
+            </mesh>
+
+            <TransformControls object={ cubeRef }  showY={ false } translationSnap={ 1 } />
+
 
             <mesh
                 position-y={ - 1 }
@@ -61,10 +61,33 @@ export const Experience = () => {
                 scale={ 10 }
             >
                 <planeGeometry />
-                <meshStandardMaterial color="greenyellow" />
+                <MeshReflectorMaterial 
+                    resolution={ 512 } 
+                    blur={ [1000, 1000] }
+                    mixBlur={ 1 } 
+                    mirror={ 0.5 }
+                    color="greenyellow"
+                />
+                
+                {/* <meshStandardMaterial color="greenyellow" /> */}
             </mesh>
 
-            <CustomObject />
+            <Float
+                speed={ 4 }
+                floatIntensity={ 3 }
+            >
+                        <Text 
+                            font="./MerriweatherSans-Regular.ttf"
+                            fontSize={ 1 }
+                            color="salmon"
+                            position-y={ 2 }
+                            maxWidth={ 3 }
+                            textAlign="center"
+                        >
+                            I love R3F
+                        </Text>
+            </Float>
+
         </>
     )
 }

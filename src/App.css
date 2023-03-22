@@ -9,6 +9,20 @@ body,
     overflow: hidden;
 }
 
+.label > div{
+    font-weight: bold;
+    font-family: Helvetica, Arial;
+    position: absolute;
+    background: #00000088;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: 30px;
+    user-select: none;
+    padding: 4px 10px;
+}
+
+
 .logo {
   height: 6em;
   padding: 1.5em;
