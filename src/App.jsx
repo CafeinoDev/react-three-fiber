@@ -6,6 +6,7 @@ import Models from './components/Models';
 import TextInCanvas from './components/TextInCanvas';
 import Portal from './components/Portal';
 import MouseEvents from './components/MouseEvents';
+import PostProcessing from './components/PostProcessing';
 
 const created = ({ gl, scene }) => {
     // gl.setClearColor('#ff0000', 1);
@@ -21,7 +22,8 @@ function App() {
             // onPointerMissed={ () => console.log('you missed!')}
             // flat
         >
-            <MouseEvents />
+            <PostProcessing />
+            {/* <MouseEvents /> */}
             {/* <Portal /> */}
             {/* <TextInCanvas /> */}
             {/* <Models /> */}
