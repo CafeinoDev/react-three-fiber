@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import Experience from './components/Experience';
 import './App.css';
 import Models from './components/Models';
+import TextInCanvas from './components/TextInCanvas';
 
 const created = ({ gl, scene }) => {
     // gl.setClearColor('#ff0000', 1);
@@ -14,10 +15,9 @@ function App() {
 
   return (
     <>
-        <Canvas
-            shadows
-        >
-            <Models />
+        <Canvas>
+            <TextInCanvas />
+            {/* <Models /> */}
             {/* <Experience /> */}
         </Canvas>
     </>
