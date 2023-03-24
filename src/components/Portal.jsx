@@ -36,11 +36,6 @@ const Portal = () =>
         <color args={ ['#030202'] } attach="background" />
         <OrbitControls makeDefault />
 
-        <mesh>
-            <boxGeometry />
-            <meshBasicMaterial color="white" />
-        </mesh>
-
         <Center>
             <mesh geometry={ nodes.baked.geometry }>
                 <meshBasicMaterial 
